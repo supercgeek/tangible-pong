@@ -26,7 +26,7 @@ function draw() {
 			fill(255, 0, 255);
 			ellipse(midPoint_Left.x, midPoint_Left.y, ellipseSize, ellipseSize);
 		}
-		
+
 		var midPoint_Right = getMidpoint(preX, preY, curX, curY, "RIGHT");
 		if (midPoint_Right !== false) {
 			fill(0, 0, 255);
@@ -37,7 +37,32 @@ function draw() {
 
 function paddleClass() {}
 
-function ballClass() {}
+function ballClass() {
+	this.x = windowWidth / 2;
+	this.y = windowHeight / 2;
+	this.speed = random(1.0, 1.5);
+
+}
+
+ballClass.update = function() {}
+ballClass.display = function() {}
+
+// Jitter class
+function Jitter() {
+	this.x = random(width);
+	this.y = random(height);
+	this.diameter = random(10, 30);
+	this.speed = 1;
+
+	// this.move = function() {
+	//   this.x += random(-this.speed, this.speed);
+	//   this.y += random(-this.speed, this.speed);
+	// };
+
+	// this.display = function() {
+	//   ellipse(this.x, this.y, this.diameter, this.diameter);
+	// }
+}
 
 function getMidpoint(pX, pY, cX, cY, boardSide) {
 	if (checkDistance(pX, pY, cX, cY, 255, 305) !== false && checkTeam(pX, pY, cX, cY) === boardSide) {

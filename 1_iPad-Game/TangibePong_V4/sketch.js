@@ -83,13 +83,7 @@ function draw() {
 			preX = touches[i - 1].x;
 			preY = touches[i - 1].y;
 		}
-
-
-
-
-
-
-
+		
 		var midPoint_Left = getMidpoint(preX, preY, curX, curY, "LEFT");
 		leftPuck.safelySetPosition(2000, 2000);
 		var midPoint_Right = getMidpoint(preX, preY, curX, curY, "RIGHT");
@@ -107,24 +101,12 @@ function draw() {
 
 		if (midPoint_Left !== false && balls[0].body.position.x < windowWidth / 2) {
 			leftPuck.safelySetPosition(midPoint_Left.x, midPoint_Left.y);
-
 			leftPuck.display();
-			fill(255, 100, 100, 100);
-			// ellipse(midPoint_Left.x, -200 + midPoint_Left.y, ellipseSize / 5, ellipseSize / 5);
 		}
 
 		if (midPoint_Right !== false && balls[0].body.position.x > windowWidth / 2) {
 			rightPuck.safelySetPosition(midPoint_Right.x, midPoint_Right.y);
-			//rightPuck.setRelativeAngle(midPoint_Left.x, midPoint_Left.y, curX, curY);
-
 			rightPuck.display();
-			fill(255, 255, 255);
-			//ellipse(midPoint_Right.x, -200 + midPoint_Right.y, ellipseSize / 5, ellipseSize / 5);
 		}
-
-
-
-
-
 	}
 }

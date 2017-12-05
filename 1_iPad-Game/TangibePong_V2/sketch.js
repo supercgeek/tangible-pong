@@ -1,15 +1,15 @@
 // module aliases
-var Engine = Matter.Engine,
-//    Render = Matter.Render,
-    World = Matter.World,
-    Bodies = Matter.Bodies;
+var Engine = Matter.Engine;
+var World = Matter.World;
+var Bodies = Matter.Bodies;
 
 //mater
 var myEngine;
-var world;
+var myWorld;
 var myBox;
-
+var myFloor;
 var ellipseSize = 250;
+var circs = [];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -17,15 +17,28 @@ function setup() {
 		event.preventDefault();
 	}
 	myEngine = Engine.create();
-	world = myEngine.world;
-	myBox = Bodies.rectangle(400, 200, 80, 80);
+	myWorld = myEngine.world;
+	myBox = Bodies.circle(100, 400, 20);
+
+	var wallOptions = {
+		isStatic: true
+	}
+	myFloor = Bodies.rectangle(windowWidth / 2, windowHeight - 40, windowWidth, 40, wallOptions);
 	Engine.run(myEngine);
-	print("hello");
+	World.add(myWorld, myBox);
+	World.add(myWorld, myFloor);
+
 	print(myBox);
 }
 
 function draw() {
 	background(0);
+
+	print(circs.length);
+
+	for (var r = 0; r < circs.length; r++) {
+		circs[r].display();
+	}
 
 	for (var i = 0; i < touches.length; i++) {
 		var preX;
@@ -42,29 +55,37 @@ function draw() {
 		if (midPoint_Left !== false) {
 			fill(255, 0, 255);
 			ellipse(midPoint_Left.x, midPoint_Left.y, ellipseSize, ellipseSize);
+
 		}
 
 		var midPoint_Right = getMidpoint(preX, preY, curX, curY, "RIGHT");
 		if (midPoint_Right !== false) {
 			fill(0, 0, 255);
 			ellipse(midPoint_Right.x, midPoint_Right.y, ellipseSize, ellipseSize);
+			ellipse(circs.push(new Circle(midPoint_Right.x, midPoint_Right.y, ellipseSize/10, ellipseSize/5)));
 		}
 	}
+
+}
+
+function mousePressed() {
+	circs.push(new Circle(mouseX, mouseY, 40, 40));
+
 }
 
 function paddleClass() {}
 
-function ballClass() {
-	this.x = windowWidth / 2;
-	this.y = windowHeight / 2;
-	this.speed = random(1.0, 1.5);
+// function ballClass() {
+// 	this.x = windowWidth / 2;
+// 	this.y = windowHeight / 2;
+// 	this.speed = random(1.0, 1.5);
 
-	this.update = function() {
-		this.
-	}
-	this.display = function() {}
+// 	this.update = function() {
+// 		this.
+// 	}
+// 	this.display = function() {}
 
-}
+// }}
 
 
 

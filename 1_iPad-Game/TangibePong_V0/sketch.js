@@ -32,8 +32,8 @@ function draw() {
 		// fill(255, 0, 0);
 		// noStroke();
 		// ellipse(curX, curY, 100, 100);
-		// fill(255, 255, 255);
-		// textSize(32);
+		fill(255, 255, 255);
+		textSize(32);
 		//text(checkDistance(preX, preY, curX, curY, 255, 305) + " 
 		//| " + checkTeam(preX, preY, curX, curY), 50, 50 + (i * 50));
 
@@ -42,11 +42,11 @@ function draw() {
 			var midPointX_Left = preX + (tempDeltaVector_Left.x / 2);
 			var midPointY_Left = preY + (tempDeltaVector_Left.y / 2);
 
-			//strokeWeight(10);
-			//stroke(255);
+			strokeWeight(10);
+			stroke(255);
 			fill(0, 0, 255);
-			ellipse(midPointX_Left, midPointY_Left, ellipseSize, ellipseSize);
-			//line(preX, preY, curX, curY);
+			//ellipse(midPointX_Left, midPointY_Left, ellipseSize, ellipseSize);
+			line(preX, preY, curX, curY);
 			//rect(0, 50, 50, 50);
 		}
 
@@ -55,11 +55,11 @@ function draw() {
 			var midPointX_Right = preX + (tempDeltaVector_Right.x / 2);
 			var midPointY_Right = preY + (tempDeltaVector_Right.y / 2);
 
-			//strokeWeight(10);
-			//stroke(255);
+			strokeWeight(10);
+			stroke(255);
 			fill(255, 0, 0);
-			ellipse(midPointX_Right, midPointY_Right, ellipseSize, ellipseSize);
-			//line(preX, preY, curX, curY);
+			//ellipse(midPointX_Right, midPointY_Right, ellipseSize, ellipseSize);
+			line(preX, preY, curX, curY);
 			//rect(windowWidth / 2, 50, 50, 50);
 		}
 	}

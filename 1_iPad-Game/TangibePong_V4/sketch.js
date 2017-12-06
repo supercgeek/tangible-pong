@@ -22,6 +22,11 @@ var rightPuck;
 //  GLOBAL VARIABLES
 var ellipseSize = 335;
 var balls = [];
+//var testShift = false;
+
+// function getTestShift() {
+// 	return testShift;
+// }
 
 function setup() {
 
@@ -83,7 +88,7 @@ function draw() {
 			preX = touches[i - 1].x;
 			preY = touches[i - 1].y;
 		}
-		
+
 		var midPoint_Left = getMidpoint(preX, preY, curX, curY, "LEFT");
 		leftPuck.safelySetPosition(2000, 2000);
 		var midPoint_Right = getMidpoint(preX, preY, curX, curY, "RIGHT");
@@ -93,7 +98,7 @@ function draw() {
 			fill(255, 100, 100, 100);
 			rect(windowWidth / 2 + windowWidth / 4, windowHeight / 2, windowWidth / 2, windowHeight);
 		}
-		
+
 		if (balls[0].body.position.x < windowWidth / 2) {
 			fill(100, 255, 100, 100);
 			rect(0 + windowWidth / 4, windowHeight / 2, windowWidth / 2, windowHeight);
@@ -109,4 +114,11 @@ function draw() {
 			rightPuck.display();
 		}
 	}
+	//print(testShift);
+}
+
+function mousePressed() {
+	ellipse(mouseX, mouseY, 100, 100);
+	//print("test");
+	testShift = true;
 }

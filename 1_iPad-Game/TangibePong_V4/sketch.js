@@ -6,6 +6,7 @@ var Body = Matter.Body;
 var Constraint = Matter.Constraint;
 var MouseConstraint = Matter.MouseConstraint;
 var Mouse = Matter.Mouse;
+var Events = Matter.Events;
 
 //  MATTER
 var myEngine;
@@ -20,10 +21,12 @@ var leftPuck;
 var rightPuck;
 
 //  GLOBAL VARIABLES
-var ellipseSize = 335;
+var ellipseSize = 300;
 var balls = [];
 //var testShift = false;
-
+var leftPlayerScore = 0;
+var rightPlayerScore = 0;
+var puckSize = 45;
 // function getTestShift() {
 // 	return testShift;
 // }
@@ -49,7 +52,7 @@ function setup() {
 	gameCeiling = Bodies.rectangle(windowWidth / 2, 0 - wallWidth / 2, windowWidth, wallWidth, wallOptions);
 	leftWall = Bodies.rectangle(0 - wallWidth / 2, windowHeight / 2, wallWidth, windowWidth, wallOptions);
 	rightWall = Bodies.rectangle(windowWidth + wallWidth / 2, windowHeight / 2, wallWidth, windowWidth, wallOptions);
-	World.add(myWorld, [gameFloor, gameCeiling, leftWall, rightWall]);
+	World.add(myWorld, [gameFloor, gameCeiling]);
 
 	//  RUN
 	Engine.run(myEngine);
@@ -61,15 +64,14 @@ function setup() {
 	myEngine.world.gravity.y = 0;
 	myEngine.world.gravity.x = 0;
 
-	balls.push(new Ball(windowWidth / 2, windowHeight / 2, 15));
+	balls.push(new Ball(windowWidth / 2, windowHeight / 2, puckSize));
 
 }
 
 function draw() {
 	background(0);
-	rectMode(CENTER);
-	fill(200, 200, 200, 200);
-	rect(windowWidth / 2, windowHeight / 2, 15, windowHeight);
+	
+	offEdge();
 	// rightPuck.display();
 	// leftPuck.display();
 
@@ -95,13 +97,13 @@ function draw() {
 		rightPuck.safelySetPosition(-2000, -2000);
 
 		if (balls[0].body.position.x > windowWidth / 2) {
-			fill(255, 100, 100, 100);
-			rect(windowWidth / 2 + windowWidth / 4, windowHeight / 2, windowWidth / 2, windowHeight);
+			fill(100, 100, 255, 25);
+			rect(windowWidth / 2 + windowWidth / 4, windowHeight / 2, 0 + windowWidth / 2, windowHeight);
 		}
 
 		if (balls[0].body.position.x < windowWidth / 2) {
-			fill(100, 255, 100, 100);
-			rect(0 + windowWidth / 4, windowHeight / 2, windowWidth / 2, windowHeight);
+			fill(100, 255, 100, 25);
+			rect(0 + windowWidth / 4, windowHeight / 2, 0 + windowWidth / 2, windowHeight);
 		}
 
 		if (midPoint_Left !== false && balls[0].body.position.x < windowWidth / 2) {
@@ -114,14 +116,85 @@ function draw() {
 			rightPuck.display();
 		}
 	}
+	checkCollisions();
+	rectMode(CENTER);
+	fill(255, 255, 240, 200);
+	rect(windowWidth / 2, windowHeight / 2, 15, windowHeight);
+	
 }
 
-function mousePressed() {
-	ellipse(mouseX, mouseY, 100, 100);
-	ellipse(mouseX, windowHeight/2, 50,50);
-	if (mouseX < windowWidth / 2) {
-		testShift = 1; //left
-	} else {
-		testShift = 2; //right
+function offEdge() {
+	textSize(25);
+	text(leftPlayerScore, 25, 45);
+	text(rightPlayerScore, windowWidth - 45, 45);
+	if (balls[0].body.position.x < 0) {
+		rightPlayerScore++;
+		balls.pop();
+		balls.push(new Ball(windowWidth / 2, windowHeight / 2, puckSize));
+
+	}
+	if (balls[0].body.position.x > windowWidth) {
+		leftPlayerScore++
+		balls.pop();
+		balls.push(new Ball(windowWidth / 2, windowHeight / 2, puckSize));
 	}
 }
+
+function checkCollisions() {
+	if (balls[0].body.position.x < windowWidth / 2) {
+
+		// A
+		var xA = balls[0].body.position.x;
+		var yA = balls[0].body.position.y;
+		var rA = balls[0].radius;
+
+		//B
+		var xB = leftPuck.body.position.x;
+		var yB = leftPuck.body.position.y;
+		var rB = leftPuck.diameter / 2;
+
+		var d = dist(xA, yA, xB, yB);
+		//var deltaForce = createVector(xA - xB, yA - yB);
+		if (d < rA + rB) {
+			// Body.applyForce(balls[0], {
+			// 	x: 0,
+			// 	y: 0
+			// }, deltaForce);
+			testShift = 1; //left
+		}
+
+	} else {
+
+		// A
+		var xA = balls[0].body.position.x;
+		var yA = balls[0].body.position.y;
+		var rA = balls[0].radius;
+
+		//B
+		var xB = rightPuck.body.position.x;
+		var yB = rightPuck.body.position.y;
+		var rB = rightPuck.diameter / 2;
+
+		var d = dist(xA, yA, xB, yB);
+		if (d < rA + rB) {
+			testShift = 2; //right
+		}
+	}
+}
+
+
+
+// function mousePressed() {
+// 	ellipse(mouseX, mouseY, 100, 100);
+// 	ellipse(mouseX, windowHeight / 2, 50, 50);
+// 	if (balls[0].body.position.x < windowWidth / 2) {
+
+// 		leftPuck.body.position.x
+// 		leftPuck.body.position.y
+// 		leftPuck.diameter
+
+// 		testShift = 1; //left
+// 	} else {
+// 		testShift = 2; //right
+// 	}
+// }

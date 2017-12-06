@@ -25,5 +25,5 @@ client.on('connect', function() {
 });
 
 client.on('message', function(topic, message) {
-	console.log('new message:', topic, message.toString());
+	//console.log('new message:', topic, message.toString());
 });

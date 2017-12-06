@@ -15,10 +15,14 @@ function Circle(x, y, w, h) {
 }
 
 function Ball(x, y, r) {
-	print(x, y);
+	var ballOptions = {
+		// frictionAir: 0,
+		// density: 1
+		restitution: 1
+	}
 	this.radius = r;
 	this.randomDirection = createVector(random(0.5, 1), random(0.5, 1));
-	this.body = Bodies.circle(x, y, this.radius);
+	this.body = Bodies.circle(x, y, this.radius, ballOptions);
 
 	World.add(myWorld, this.body);
 
@@ -42,7 +46,8 @@ function Puck(x, y, puckDiameter, team) {
 	this.relativeAngle;
 
 	var puckOptions = {
-		isStatic: true
+		isStatic: true,
+		restitution: 1
 	}
 	this.body = Bodies.circle(x, y, this.diameter / 2, puckOptions);
 
@@ -58,7 +63,7 @@ function Puck(x, y, puckDiameter, team) {
 		if (this.team === "LEFT") {
 			fill(0, 0, 255);
 		} else if (this.team === "RIGHT") {
-			fill(255, 0, 255);
+			fill(255, 0, 0);
 		} else {
 			fill(255, 255, 255);
 		}

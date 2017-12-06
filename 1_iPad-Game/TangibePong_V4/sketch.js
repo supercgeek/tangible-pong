@@ -114,11 +114,14 @@ function draw() {
 			rightPuck.display();
 		}
 	}
-	//print(testShift);
 }
 
 function mousePressed() {
 	ellipse(mouseX, mouseY, 100, 100);
-	//print("test");
-	testShift = true;
+	ellipse(mouseX, windowHeight/2, 50,50);
+	if (mouseX < windowWidth / 2) {
+		testShift = 1; //left
+	} else {
+		testShift = 2; //right
+	}
 }

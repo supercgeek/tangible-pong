@@ -1,4 +1,4 @@
-var testShift = false;
+var testShift = 0;
 var client = mqtt.connect('mqtt://tangible_pong_key:reco_final@broker.shiftr.io', {
 	clientId: 'javascript'
 });
@@ -11,11 +11,15 @@ client.on('connect', function() {
 
 
 	setInterval(function() {
-		print("interFIRE", testShift);
-		if (testShift === true) {
-			// print(publishED);
-			client.publish('/buzz', 'now');
-			testShift = false;
+		//print("interFIRE", testShift);
+		if (testShift !== 0) {
+			if (testShift == 1) {
+				client.publish('/left', 'now');
+			}
+			if (testShift == 2) {
+				client.publish('/right', 'now');
+			}
+			testShift = 0;
 		}
 	}, 100);
 });
